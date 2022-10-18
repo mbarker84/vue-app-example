@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica", sans-serif;
+  margin: 0;
+  padding: 1rem;
+  background-color: #21213e;
+  color: azure;
+}
+
+table {
+  border-collapse: collapse;
+  min-width: min(100%, 300px);
+}
+
+th {
+  text-align: left;
+}
+
+th:not(:first-child) {
+  text-align: right;
+  padding: 0.25rem 0.5rem;
+}
+
+thead th {
+  border-bottom: 2px solid slategrey;
+}
+
+td {
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid slategrey;
+}
+
+td:first-child {
+  padding: 0.5rem 0.5rem 0.5rem 0;
+}
+
+tbody td:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+tbody tr:first-child td {
+  padding: 1rem 0.5rem 0.5rem;
+}
+
+tbody tr:first-child td:first-child {
+  padding: 1rem 2rem 0.5rem 0;
+}
+
+td span {
+  margin-right: 0.5rem;
+}
+
+.d3-square {
+  width: 1rem;
+  height: 1rem;
+}

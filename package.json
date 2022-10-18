@@ -1,0 +1,23 @@
+{
+  "name": "vue-app-example",
+  "version": "1.0.0",
+  "description": "",
+  "source": "index.html",
+  "scripts": {
+    "start": "parcel --open",
+    "build": "parcel build",
+    "build:raw": "parcel build --no-optimize --no-scope-hoist"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/reporter-bundle-buddy": "^2.7.0",
+    "@parcel/transformer-vue": "^2.7.0",
+    "parcel": "^2.7.0"
+  },
+  "dependencies": {
+    "d3": "^7.6.1",
+    "vue": "^3.2.40",
+    "vue-router": "^4.1.5"
+  }
+}
