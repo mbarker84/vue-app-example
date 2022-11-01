@@ -1,39 +1,34 @@
 <template>
-  <h1>{{ title }}</h1>
-  <p v-if="loading">Loading...</p>
-  <DataTable :items="people" v-if="people.length"></DataTable>
+  <nav>
+    <ul class="nav__list">
+      <li v-for="link in links" :key="link.to">
+        <router-link :to="link.to" class="nav__link">{{
+          link.title
+        }}</router-link>
+      </li>
+    </ul>
+  </nav>
+  <router-view></router-view>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
-import { json } from "d3-fetch";
-import DataTable from "./components/DataTable";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: {
-    DataTable,
-  },
-
   setup() {
-    const title = "Leaderboard";
-    const loading = ref(true);
-    const people = ref([]);
-
-    const fetchPeople = () => {
-      json("https://api.npoint.io/45adfd0faf4952705643").then((data) => {
-        people.value = data;
-        loading.value = false;
-      });
-    };
-
-    onMounted(() => {
-      fetchPeople();
-    });
+    const links = [
+      {
+        title: "Home",
+        to: "/",
+      },
+      {
+        title: "About",
+        to: "/about",
+      },
+    ];
 
     return {
-      title,
-      people,
-      loading,
+      links,
     };
   },
 });

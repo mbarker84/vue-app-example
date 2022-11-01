@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel --open",
     "build": "parcel build",
-    "build:raw": "parcel build --no-optimize --no-scope-hoist"
+    "build:raw": "parcel build --no-optimize --no-scope-hoist",
+    "clean": "rm -rf dist"
   },
   "author": "",
   "license": "ISC",

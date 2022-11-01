@@ -1,3 +1,46 @@
+:root {
+  --space-3xs: clamp(0.25rem, calc(0.21rem + 0.2vw), 0.38rem);
+  --space-2xs: clamp(0.5rem, calc(0.44rem + 0.31vw), 0.69rem);
+  --space-xs: clamp(0.75rem, calc(0.65rem + 0.51vw), 1.06rem);
+  --space-s: clamp(1rem, calc(0.88rem + 0.61vw), 1.38rem);
+  --space-m: clamp(1.5rem, calc(1.32rem + 0.92vw), 2.06rem);
+  --space-l: clamp(2rem, calc(1.76rem + 1.22vw), 2.75rem);
+  --space-xl: clamp(3rem, calc(2.63rem + 1.84vw), 4.13rem);
+  --space-2xl: clamp(4rem, calc(3.51rem + 2.45vw), 5.5rem);
+  --space-3xl: clamp(6rem, calc(5.27rem + 3.67vw), 8.25rem);
+
+  /* One-up pairs */
+  --space-3xs-2xs: clamp(0.25rem, calc(0.11rem + 0.71vw), 0.69rem);
+  --space-2xs-xs: clamp(0.5rem, calc(0.32rem + 0.92vw), 1.06rem);
+  --space-xs-s: clamp(0.75rem, calc(0.55rem + 1.02vw), 1.38rem);
+  --space-s-m: clamp(1rem, calc(0.65rem + 1.73vw), 2.06rem);
+  --space-m-l: clamp(1.5rem, calc(1.09rem + 2.04vw), 2.75rem);
+  --space-l-xl: clamp(2rem, calc(1.31rem + 3.47vw), 4.13rem);
+  --space-xl-2xl: clamp(3rem, calc(2.18rem + 4.08vw), 5.5rem);
+  --space-2xl-3xl: clamp(4rem, calc(2.61rem + 6.94vw), 8.25rem);
+
+  /* Custom pairs */
+  --space-s-l: clamp(1rem, calc(0.43rem + 2.86vw), 2.75rem);
+
+  --bgColor: 220deg 20% 96%;
+  --cardColor: 220deg 20% 98%;
+  --shadow-color: 0deg 0% 78%;
+  --shadow-elevation-low: 0.3px 0.5px 0.9px hsl(var(--shadow-color) / 0.02),
+    0.4px 0.8px 1.3px -0.1px hsl(var(--shadow-color) / 0.13),
+    0.8px 1.6px 2.6px -0.2px hsl(var(--shadow-color) / 0.24);
+  --shadow-elevation-medium: 0.3px 0.5px 0.9px hsl(var(--shadow-color) / 0.02),
+    1px 1.9px 3.1px -0.1px hsl(var(--shadow-color) / 0.11),
+    1.9px 3.8px 6.2px -0.2px hsl(var(--shadow-color) / 0.19),
+    3.9px 7.8px 12.8px -0.2px hsl(var(--shadow-color) / 0.28);
+  --shadow-elevation-high: 0.3px 0.5px 0.9px hsl(var(--shadow-color) / 0.02),
+    1.6px 3.3px 5.4px hsl(var(--shadow-color) / 0.07),
+    2.9px 5.8px 9.5px -0.1px hsl(var(--shadow-color) / 0.13),
+    4.3px 8.7px 14.2px -0.1px hsl(var(--shadow-color) / 0.18),
+    6.4px 12.8px 20.9px -0.2px hsl(var(--shadow-color) / 0.23),
+    9.4px 18.8px 30.7px -0.2px hsl(var(--shadow-color) / 0.28),
+    13.8px 27.5px 45px -0.2px hsl(var(--shadow-color) / 0.34);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,14 +48,22 @@
 body {
   font-family: "Helvetica", sans-serif;
   margin: 0;
-  padding: 1rem;
-  background-color: #21213e;
-  color: azure;
+  background-color: hsl(var(--bgColor));
+}
+
+figure {
+  margin: 0;
+}
+
+svg {
+  width: 100%;
+  height: auto;
 }
 
 table {
   border-collapse: collapse;
   min-width: min(100%, 300px);
+  width: 100%;
 }
 
 th {
@@ -55,7 +106,105 @@ td span {
   margin-right: 0.5rem;
 }
 
-.d3-square {
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding-inline: var(--space-m);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-m);
+}
+
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.d3-circle {
   width: 1rem;
   height: 1rem;
+  background-color: pink;
+  border-radius: 50%;
+}
+
+nav {
+  padding: var(--space-xs) var(--space-s);
+}
+
+.nav__list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.nav__link {
+  color: inherit;
+}
+
+.error {
+  border: 2px solid red;
+  border-radius: 1rem;
+  padding: var(--space-m);
+}
+
+.error p {
+  margin: 0;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+}
+
+.loader::after {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, white 40%, transparent 0),
+    conic-gradient(lightgrey, white);
+  animation: spin 800ms infinite linear;
+  margin-left: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.widget {
+  padding: var(--space-m);
+  border-radius: 1rem;
+  background-color: hsl(var(--cardColor));
+  box-shadow: var(--shadow-elevation-medium);
+}
+
+@media (min-width: 600px) {
+  .kpi {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+.kpi figure {
+  margin-top: auto;
+}
+
+.kpi__title > * {
+  display: block;
+}
+
+.kpi__value {
+  font-size: 1.6em;
+}
+
+.kpi__unit {
+  font-size: 0.6em;
 }
