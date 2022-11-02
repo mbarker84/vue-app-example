@@ -2,26 +2,38 @@
   <div class="container">
     <h1>Home</h1>
     <div class="grid">
-      <component :is="TestComponent" :data="data">
-        <KPI :data="data" color="turquoise"></KPI>
-      </component>
+      <Widget>
+        <component :is="KPIComponent" v-bind="kpiProps"></component>
+      </Widget>
       <WidgetLoader
         url="https://api.npoint.io/01264aa2a713715ccc1e"
         v-slot="slotProps"
       >
-        <KPI :data="slotProps.data" color="turquoise"></KPI>
+        <component
+          :is="kpiComponentLoad"
+          :data="slotProps.data"
+          color="turquoise"
+        ></component>
       </WidgetLoader>
       <WidgetLoader
         url="https://api.npoint.io/ea45973ff614bdbc7ed1"
         v-slot="slotProps"
       >
-        <KPI :data="slotProps.data" color="turquoise"></KPI>
+        <component
+          :is="kpiComponentLoad"
+          :data="slotProps.data"
+          color="turquoise"
+        ></component>
       </WidgetLoader>
       <WidgetLoader
         url="https://api.npoint.io/8d900f8ba26cba4acce7"
         v-slot="slotProps"
       >
-        <KPI :data="slotProps.data" color="turquoise"></KPI>
+        <component
+          :is="kpiComponentLoad"
+          :data="slotProps.data"
+          color="turquoise"
+        ></component>
       </WidgetLoader>
       <WidgetLoader
         url="https://api.npoint.io/04459c847fdd2a1d84e3"
@@ -34,19 +46,18 @@
 </template>
 
 <script>
-import { defineComponent, defineAsyncComponent, ref } from "vue";
+import { defineComponent, defineAsyncComponent, ref, computed } from "vue";
 import DataTable from "../components/DataTable";
-import KPI from "../components/KPI";
 import WidgetLoader from "../components/WidgetLoader";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
+import Widget from "../components/Widget";
 
 export default defineComponent({
   components: {
     DataTable,
-    KPI,
     WidgetLoader,
-    // AsyncTest: () => import("../components/AsyncTest.vue"),
+    Widget,
     Loader,
     Error,
   },
@@ -54,30 +65,41 @@ export default defineComponent({
   setup() {
     const data = ref(null);
 
-    const fetchAndLoad = async () => {
+    const fetchAndLoad = async (url) => {
       try {
-        const response = await fetch(
-          "https://api.npoint.io/01264aa2a713715ccc1e"
-        );
+        const response = await fetch(url);
         data.value = await response.json();
       } catch (e) {
         console.error(e);
       }
     };
 
-    const loaderFn = () => {
-      return fetchAndLoad().then(() => import("../components/AsyncTest.vue"));
+    const loadKPI = () => {
+      return fetchAndLoad("https://api.npoint.io/01264aa2a713715ccc1e").then(
+        () => import("../components/KPI.vue")
+      );
     };
 
-    const TestComponent = defineAsyncComponent({
-      loader: loaderFn,
-      loadingComponent: Loader,
-      errorComponent: Error,
-      delay: 1000,
-      timeout: 4000,
+    const kpiProps = computed(() => {
+      return {
+        data: data.value,
+        color: "turquoise",
+      };
     });
 
-    return { TestComponent, data };
+    const KPIComponent = defineAsyncComponent({
+      loader: loadKPI,
+      loadingComponent: Loader,
+      errorComponent: Error,
+      delay: 200,
+      timeout: 5000,
+    });
+
+    const kpiComponentLoad = defineAsyncComponent(() =>
+      import("../components/KPI.vue")
+    );
+
+    return { KPIComponent, data, kpiProps, kpiComponentLoad };
   },
 });
 </script>
