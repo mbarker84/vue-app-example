@@ -58,6 +58,7 @@ figure {
 svg {
   width: 100%;
   height: auto;
+  fill: currentColor;
 }
 
 table {
@@ -147,18 +148,28 @@ nav {
 }
 
 .error {
-  border: 2px solid red;
-  border-radius: 1rem;
-  padding: var(--space-m);
+  display: flex;
+  align-items: baseline;
+  aspect-ratio: var(--ar, 5 / 3);
 }
 
 .error p {
   margin: 0;
 }
 
+.error svg {
+  width: 1.2em;
+  flex: 0 0 auto;
+  color: red;
+  margin-right: 0.5em;
+  position: relative;
+  top: 0.2em;
+}
+
 .loader {
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  aspect-ratio: var(--ar, 5 / 3);
 }
 
 .loader::after {
@@ -183,6 +194,7 @@ nav {
   border-radius: 1rem;
   background-color: hsl(var(--cardColor));
   box-shadow: var(--shadow-elevation-medium);
+  aspect-ratio: var(--ar);
 }
 
 @media (min-width: 600px) {
