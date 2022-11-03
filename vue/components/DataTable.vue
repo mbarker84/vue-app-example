@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in items" :key="item.name">
+      <tr v-for="item in data" :key="item.name">
         <td>{{ item.name }}</td>
         <td class="cell">
           <span>{{ item.score }}</span>
@@ -24,11 +24,11 @@ import { scaleLinear } from "d3-scale";
 
 export default defineComponent({
   props: {
-    items: Array,
+    data: Array,
   },
 
   setup(props) {
-    const { items } = props;
+    const { data } = props;
 
     const colorScale = scaleLinear(
       [0, 4, 8, 10],
@@ -42,13 +42,13 @@ export default defineComponent({
 
     onMounted(() => {
       selectAll(".cell")
-        .data(items)
+        .data(data)
         .append("div")
         .attr("class", "d3-circle")
         .style("background-color", (d) => colorScale(d.score));
     });
 
-    return { items };
+    return { data };
   },
 });
 </script>
