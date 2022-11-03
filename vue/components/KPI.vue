@@ -6,7 +6,7 @@
         >{{ value }}<span class="kpi__unit">{{ unit }}</span></span
       >
     </h2>
-    <figure>
+    <figure v-if="lineGraphData">
       <LineGraph :data="lineGraphData" :color="color"></LineGraph>
     </figure>
   </div>
@@ -29,7 +29,7 @@ export default defineComponent({
   setup(props) {
     const { data, color } = props;
     const { title, value, unit } = data;
-    const lineGraphData = data.data;
+    const lineGraphData = data ? data.data : null;
 
     return { title, value, unit, data, lineGraphData, color };
   },
