@@ -24,7 +24,7 @@ import { scaleLinear } from "d3-scale";
 
 export default defineComponent({
   props: {
-    data: Array,
+    data: Object,
   },
 
   setup(props) {
