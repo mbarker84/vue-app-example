@@ -2,27 +2,23 @@
   <div class="container">
     <h1>Home</h1>
     <div class="grid">
-      <Widget
+      <CacheWidget
         v-for="component in components"
         :key="component.url"
         :url="component.url"
         :importFunction="component.importFunction"
-      ></Widget>
+      ></CacheWidget>
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import Loader from "../components/Loader";
-import Error from "../components/Error";
-import Widget from "../components/Widget";
+import CacheWidget from "../components/CacheWidget";
 
 export default defineComponent({
   components: {
-    Widget,
-    Loader,
-    Error,
+    CacheWidget,
   },
 
   setup() {
