@@ -2,16 +2,16 @@
   <div class="container">
     <h1>Home</h1>
     <div class="grid">
-      <CacheWidget
+      <!-- <CacheWidget
         v-for="component in components"
         :key="component.url"
         v-bind="component"
-      ></CacheWidget>
-      <!-- <WidgetLoader
+      ></CacheWidget> -->
+      <WidgetLoader
         v-for="component in components"
         :key="component.url"
         v-bind="component"
-      ></WidgetLoader> -->
+      ></WidgetLoader>
     </div>
   </div>
 </template>

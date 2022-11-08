@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="widget"
-    :style="{ 'aspect-ratio': shouldShowLoader ? aspectRatio : '' }"
-  >
+  <div class="widget" :style="{ 'aspect-ratio': loading ? aspectRatio : '' }">
     <component :is="AsyncComponent" v-bind="componentProps"></component>
   </div>
 </template>
