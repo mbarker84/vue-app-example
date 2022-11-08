@@ -46,17 +46,20 @@
 }
 
 body {
-  min-height: 100vh;
   font-family: "Helvetica", sans-serif;
   margin: 0;
   background-color: hsl(var(--bgColor));
+}
+
+#app {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 main {
   padding-bottom: var(--space-xl);
-  margin-top: auto;
+  flex-grow: 1;
 }
 
 figure {
