@@ -5,9 +5,13 @@
       <CacheWidget
         v-for="component in components"
         :key="component.url"
-        :url="component.url"
-        :importFunction="component.importFunction"
+        v-bind="component"
       ></CacheWidget>
+      <!-- <WidgetLoader
+        v-for="component in components"
+        :key="component.url"
+        v-bind="component"
+      ></WidgetLoader> -->
     </div>
   </div>
 </template>
@@ -15,10 +19,12 @@
 <script>
 import { defineComponent } from "vue";
 import CacheWidget from "../components/CacheWidget";
+import WidgetLoader from "../components/WidgetLoader";
 
 export default defineComponent({
   components: {
     CacheWidget,
+    WidgetLoader,
   },
 
   setup() {

@@ -1,13 +1,13 @@
 <template>
-  <div class="kpi">
+  <div class="kpi" v-if="data">
     <h2 class="kpi__title">
-      <span class="kpi__name">{{ title }}</span>
+      <span class="kpi__name">{{ data.title }}</span>
       <span class="kpi__value"
-        >{{ value }}<span class="kpi__unit">{{ unit }}</span></span
+        >{{ data.value }}<span class="kpi__unit">{{ data.unit }}</span></span
       >
     </h2>
-    <figure v-if="lineGraphData">
-      <LineGraph :data="lineGraphData" :color="color"></LineGraph>
+    <figure>
+      <LineGraph :data="data.data" :color="color"></LineGraph>
     </figure>
   </div>
 </template>
@@ -28,10 +28,8 @@ export default defineComponent({
 
   setup(props) {
     const { data, color } = props;
-    const { title, value, unit } = data;
-    const lineGraphData = data ? data.data : null;
 
-    return { title, value, unit, data, lineGraphData, color };
+    return { data, color };
   },
 });
 </script>

@@ -1,11 +1,21 @@
 <template>
-  <p class="loader">Loading...</p>
+  <p class="loader">{{ text }}</p>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  setup() {},
+  props: {
+    text: {
+      type: String,
+      default: "Loading...",
+    },
+  },
+
+  setup(props) {
+    const { text } = props;
+    return { text };
+  },
 });
 </script>

@@ -1,72 +1,66 @@
 <template>
-  <div class="widget" :style="{ '--ar': isValidating ? aspectRatio : '' }">
-    <Loader v-if="isValidating"></Loader>
-    <Error v-else-if="error" :errorMessage="error"></Error>
-    <slot :data="data" v-else-if="data"></slot>
+  <div
+    class="widget"
+    :style="{ 'aspect-ratio': shouldShowLoader ? aspectRatio : '' }"
+  >
+    <component :is="AsyncComponent" v-bind="componentProps"></component>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, onBeforeMount, onBeforeUnmount } from "vue";
+import {
+  defineComponent,
+  ref,
+  defineAsyncComponent,
+  computed,
+  onBeforeUnmount,
+} from "vue";
 import Loader from "./Loader";
 import Error from "./Error";
-import useSWRV from "swrv";
-import LocalStorageCache from "swrv/dist/cache/adapters/localStorage";
 
 export default defineComponent({
-  components: { Loader, Error },
-
   props: {
-    url: String,
     aspectRatio: {
       type: String,
       default: "5 / 3",
     },
+    url: String,
+    importFunction: Function,
   },
 
   setup(props) {
-    const { url, aspectRatio } = props;
+    const { aspectRatio, url, importFunction } = props;
+    const data = ref(null);
     const loading = ref(true);
-    // const error = ref(null);
-    // const data = ref(null);
-    // const controller = ref(null);
     const controller = new AbortController();
 
-    const fetchFn = () => {
+    const loadComponent = () => {
       return fetch(url, { signal: controller.signal })
         .then((response) => response.json())
+        .then((response) => (data.value = response))
+        .then(importFunction)
         .catch((e) => console.error(e))
         .finally(() => (loading.value = false));
     };
 
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetch(url, { signal: controller.value.signal });
-    //     const jsonData = await response.json();
-    //     data.value = jsonData;
-    //   } catch (err) {
-    //     error.value = err.message;
-    //   } finally {
-    //     loading.value = false;
-    //   }
-    // };
+    const componentProps = computed(() => {
+      return {
+        data: data.value,
+        color: "turquoise",
+      };
+    });
 
-    const { data, error, isValidating } = useSWRV(url, fetchFn);
-
-    onBeforeMount(() => {
-      // controller.value = new AbortController();
-      const swrvFetch = useSWRV(url, fetchFn, {
-        cache: new LocalStorageCache("swrv"),
-        shouldRetryOnError: false,
-      });
-      data.value = swrvFetch.data;
-      error.value = swrvFetch.error;
-      // fetchData();
+    const AsyncComponent = defineAsyncComponent({
+      loader: loadComponent,
+      loadingComponent: Loader,
+      errorComponent: Error,
+      delay: 200,
+      timeout: 5000,
     });
 
     onBeforeUnmount(() => controller.abort());
 
-    return { loading, error, data, aspectRatio, isValidating };
+    return { aspectRatio, AsyncComponent, props, componentProps, loading };
   },
 });
 </script>

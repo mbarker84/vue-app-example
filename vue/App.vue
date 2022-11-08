@@ -8,7 +8,12 @@
       </li>
     </ul>
   </nav>
-  <router-view></router-view>
+  <main>
+    <router-view></router-view>
+  </main>
+  <footer>
+    <small>&copy; Michelle Barker</small>
+  </footer>
 </template>
 
 <script>
@@ -22,8 +27,8 @@ export default defineComponent({
         to: "/",
       },
       {
-        title: "About",
-        to: "/about",
+        title: "Locations",
+        to: "/locations",
       },
     ];
 

@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table v-if="data">
     <thead>
       <tr>
         <th>Name</th>
