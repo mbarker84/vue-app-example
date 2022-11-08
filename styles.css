@@ -46,9 +46,17 @@
 }
 
 body {
+  min-height: 100vh;
   font-family: "Helvetica", sans-serif;
   margin: 0;
   background-color: hsl(var(--bgColor));
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  padding-bottom: var(--space-xl);
+  margin-top: auto;
 }
 
 figure {
@@ -59,6 +67,10 @@ svg {
   width: 100%;
   height: auto;
   fill: currentColor;
+}
+
+footer {
+  padding: var(--space-s);
 }
 
 table {
@@ -76,13 +88,16 @@ th:not(:first-child) {
   padding: 0.25rem 0.5rem;
 }
 
-thead th {
+tr {
+  border-bottom: 1px solid slategrey;
+}
+
+thead tr {
   border-bottom: 2px solid slategrey;
 }
 
 td {
   padding: 0.5rem 0.5rem;
-  border-bottom: 1px solid slategrey;
 }
 
 td:first-child {
@@ -190,11 +205,19 @@ nav {
 }
 
 .widget {
+  position: relative;
   padding: var(--space-m);
   border-radius: 1rem;
   background-color: hsl(var(--cardColor));
   box-shadow: var(--shadow-elevation-medium);
   aspect-ratio: var(--ar);
+}
+
+.widget__validating {
+  position: absolute;
+  top: var(--space-m);
+  right: var(--space-m);
+  margin: 0;
 }
 
 @media (min-width: 600px) {
