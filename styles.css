@@ -63,6 +63,10 @@ figure {
   margin: 0;
 }
 
+a {
+  color: inherit;
+}
+
 svg {
   width: 100%;
   height: auto;
@@ -147,19 +151,23 @@ td span {
   border-radius: 50%;
 }
 
-nav {
+header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-s);
   padding: var(--space-xs) var(--space-s);
+}
+
+.header__github-link {
+  margin-left: auto;
 }
 
 .nav__list {
   display: flex;
   gap: 1rem;
   list-style: none;
-  padding: 0;
-}
-
-.nav__link {
-  color: inherit;
+  padding: 0 var(--space-s) 0 0;
 }
 
 .error {
