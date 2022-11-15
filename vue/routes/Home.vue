@@ -2,29 +2,31 @@
   <div class="container">
     <h1>Home</h1>
     <div class="grid">
-      <!-- <CacheWidget
-        v-for="component in components"
-        :key="component.url"
-        v-bind="component"
-      ></CacheWidget> -->
       <WidgetLoader
         v-for="component in components"
         :key="component.url"
         v-bind="component"
       ></WidgetLoader>
+
+      <!--Alternatively, load without SWRV-->
+      <!-- <WidgetLoaderSimple
+        v-for="component in components"
+        :key="component.url"
+        v-bind="component"
+      ></WidgetLoaderSimple> -->
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import CacheWidget from "../components/CacheWidget";
 import WidgetLoader from "../components/WidgetLoader";
+import WidgetLoaderSimple from "../components/WidgetLoaderSimple";
 
 export default defineComponent({
   components: {
-    CacheWidget,
     WidgetLoader,
+    WidgetLoaderSimple,
   },
 
   setup() {

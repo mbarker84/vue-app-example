@@ -1,27 +1,28 @@
 <template>
   <div class="container">
     <h1>Locations</h1>
-    <MapView></MapView>
-    <CacheWidget
+    <WidgetLoader
       :url="mapComponent.url"
       :importFunction="mapComponent.importFunction"
-    ></CacheWidget>
-    <!-- <WidgetLoader
+    ></WidgetLoader>
+
+    <!--Alternatively, load without SWRV-->
+    <!-- <WidgetLoaderSimple
       :url="mapComponent.url"
       :importFunction="mapComponent.importFunction"
-    ></WidgetLoader> -->
+    ></WidgetLoaderSimple> -->
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import CacheWidget from "../components/CacheWidget";
 import WidgetLoader from "../components/WidgetLoader";
+import WidgetLoaderSimple from "../components/WidgetLoaderSimple";
 
 export default defineComponent({
   components: {
-    CacheWidget,
     WidgetLoader,
+    WidgetLoaderSimple,
   },
 
   setup() {

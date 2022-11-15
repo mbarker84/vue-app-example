@@ -1,21 +1,40 @@
 <template>
-  <div class="widget" :style="{ 'aspect-ratio': loading ? aspectRatio : '' }">
-    <component :is="AsyncComponent" v-bind="componentProps"></component>
+  <div
+    class="widget"
+    :style="{ 'aspect-ratio': shouldShowLoader ? aspectRatio : '' }"
+  >
+    <Loader v-if="shouldShowLoader"></Loader>
+    <Error v-else-if="error" :errorMessage="error.message"></Error>
+    <Transition>
+      <component
+        :is="AsyncComponent"
+        v-bind="componentProps"
+        v-if="data"
+      ></component>
+    </Transition>
+
+    <!--Small spinner to be shown while component is revalidating-->
+    <Loader
+      v-if="isValidating && data"
+      class="widget__validating"
+      text=""
+      aria-hidden="true"
+    ></Loader>
   </div>
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  defineAsyncComponent,
-  computed,
-  onBeforeUnmount,
-} from "vue";
+import { defineComponent, defineAsyncComponent, computed } from "vue";
 import Loader from "./Loader";
 import Error from "./Error";
+import { useLazyFetch } from "../composables/lazyFetch";
 
 export default defineComponent({
+  components: {
+    Error,
+    Loader,
+  },
+
   props: {
     aspectRatio: {
       type: String,
@@ -27,18 +46,6 @@ export default defineComponent({
 
   setup(props) {
     const { aspectRatio, url, importFunction } = props;
-    const data = ref(null);
-    const loading = ref(true);
-    const controller = new AbortController();
-
-    const loadComponent = () => {
-      return fetch(url, { signal: controller.signal })
-        .then((response) => response.json())
-        .then((response) => (data.value = response))
-        .then(importFunction)
-        .catch((e) => console.error(e))
-        .finally(() => (loading.value = false));
-    };
 
     const componentProps = computed(() => {
       return {
@@ -47,17 +54,37 @@ export default defineComponent({
       };
     });
 
+    const { data, isValidating, error } = useLazyFetch(url);
+
+    const shouldShowLoader = computed(() => isValidating.value && !data.value);
+
     const AsyncComponent = defineAsyncComponent({
-      loader: loadComponent,
-      loadingComponent: Loader,
-      errorComponent: Error,
+      loader: importFunction,
       delay: 200,
       timeout: 5000,
     });
 
-    onBeforeUnmount(() => controller.abort());
-
-    return { aspectRatio, AsyncComponent, props, componentProps, loading };
+    return {
+      aspectRatio,
+      AsyncComponent,
+      componentProps,
+      isValidating,
+      data,
+      error,
+      shouldShowLoader,
+    };
   },
 });
 </script>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
