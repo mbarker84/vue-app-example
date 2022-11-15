@@ -5,3 +5,21 @@ This is a simple data fetching app using Vue and D3.js with the aim of demonstra
 - Async components
 - Import-on-interaction
 - SWRV (stale-while-revalidate)
+
+Install:
+
+```bash
+npm install
+```
+
+Start:
+
+```bash
+npm start
+```
+
+Build:
+
+```bash
+npm run build
+```
